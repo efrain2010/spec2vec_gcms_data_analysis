@@ -14,3 +14,4 @@ dependencies:
   - pyyaml
   - rdkit >=2020.03.1
   - scipy
+  - jupyterlab
