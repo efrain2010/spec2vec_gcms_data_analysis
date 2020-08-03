@@ -4,8 +4,10 @@ Analysis of mass spectra in GC/MS samples using spec2vec and matchms repositorie
 
 ## To test first download Spec2vec and matchms repos
 
-    conda create --name gmcs_analysis python=3.7
-    conda activate gmcs_analysis
-    conda install --channel nlesc --channel bioconda --channel conda-forge spec2vec
-    conda install --channel nlesc --channel bioconda --channel conda-forge matchms
-    pip install jupyter
+    conda env create --file conda/environment-dev.yml
+    conda activate gcms-analysis
+    cd ../path_to/matchms
+    python setup.py install
+    cd ../path_to/spec2vec_gcms_data_analysis
+    jupyter notebook
+    

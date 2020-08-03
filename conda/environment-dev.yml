@@ -1,10 +1,12 @@
 name: gcms-analysis
 channels:
   - bioconda
+  - nlesc
   - conda-forge
   - defaults
 dependencies:
   - gensim >=3.8.0
+  - spec2vec
   - matplotlib
   - numba >=0.47
   - numpy
