@@ -1,10 +1,13 @@
 """Plotting functions for spec2vec"""
+import os
+import re
+import unidecode
 import numpy as np
 from matplotlib import pyplot as plt
 
 
 def plot_precentile(arr_ref, arr_sim, num_bins=1000, show_top_percentile=1.0,
-                    ignore_diagonal=False):
+                    ignore_diagonal=False, title=None):
     """ Plot top percentile (as specified by show_top_percentile) of best restults
     in arr_sim and compare against reference values in arr_ref.
 
@@ -64,8 +67,21 @@ def plot_precentile(arr_ref, arr_sim, num_bins=1000, show_top_percentile=1.0,
         color='black')
     plt.xticks(np.linspace(0, show_top_percentile, 5),
                ["{:.2f}%".format(x) for x in np.linspace(0, show_top_percentile, 5)])
+    if title is not None:
+        plt.suptitle(title, fontsize=16)
     plt.xlabel("Top percentile of spectral similarity score g(s,s')")
     plt.ylabel("Mean molecular similarity (f(t,t') within that percentile)")
+    
+    def slugify(text):
+        text = unidecode.unidecode(text).lower() 
+        return re.sub(r'[\W_]+', '_', text)
+    
+    filename = "top_percentil_comparison"
+    if title is not None:
+        filename = slugify(title)
+        
+    path = os.path.join(os.path.dirname(os.getcwd()), "data")
+    plt.savefig(os.path.join(path, filename + ".png"))
 
     return ref_score_cum
 
