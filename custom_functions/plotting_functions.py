@@ -23,6 +23,11 @@ def plot_precentile(arr_ref, arr_sim, num_bins=1000, show_top_percentile=1.0,
         Choose which part to plot. Will plot the top 'show_top_percentile' part of
         all similarity values given in arr_sim. Default = 1.0
     """
+    
+    # function to search and obtain nan elemnts and delete them
+    # First checks if the arrays has the same length
+    # Then obtaines the indexes of the elements that are not nan of the reference array
+    # Then overwrites both arrays without the position on which were nans in the reference array
     def _ignore_reference_nans(arr_ref, arr_sim):
         assert arr_ref.shape == arr_sim.shape, "Expected two arrays of identical shape."
         idx_not_nans = np.where(np.isnan(arr_ref) == False)
@@ -30,12 +35,16 @@ def plot_precentile(arr_ref, arr_sim, num_bins=1000, show_top_percentile=1.0,
         arr_ref = arr_ref[idx_not_nans]
         return arr_ref, arr_sim
 
+    # If true replace the elements in the diagonal with NaN
     if ignore_diagonal:
         np.fill_diagonal(arr_ref, np.nan)
 
+    # Call to this method to remove the NaN elements from the arrays
     arr_ref, arr_sim = _ignore_reference_nans(arr_ref, arr_sim)
 
+    # Obtaine the index position according to the percentile
     start = int(arr_sim.shape[0] * show_top_percentile / 100)
+    # 
     idx = np.argpartition(arr_sim, -start)
     starting_point = arr_sim[idx[-start]]
     if starting_point == 0:
