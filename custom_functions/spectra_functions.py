@@ -1,8 +1,16 @@
+import os
+from pathlib import Path
 from matchms import Spikes
 from matchms import Spectrum
 import numpy as np
 import random
 
+def get_data_folder_path():
+    home = str(Path.home())
+    home = home + "/../../Volumes/easystore/spec2vec_gcms_data_analysis"
+    path = os.path.join(home, "data")
+    print(path)
+    return path
 
 def group_by_inchikey(spectrums):
     grouped_spectrum = []
